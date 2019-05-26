@@ -12,7 +12,6 @@ app.use((req, res) => res.sendFile(path.join(__dirname, '/index.html'))) ;
 const wss = new ws.Server({ server })
 
 wss.on('connection', function (ws) {
-  
 });
 
 listenTips('my_mongolian_slut');
