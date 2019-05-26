@@ -14,8 +14,6 @@ const wss = new ws.Server({ server })
 wss.on('connection', function (ws) {
 });
 
-listenTips('my_mongolian_slut');
-listenTips('keokistar');
 listenTips('magical_ramona');
 
 function listenTips(modelName) {
