@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      function connect() {
+        var socket = new WebSocket("ws://localhost:8000");
+        socket.onmessage = function (msg) { message(msg.data); }
+
+        function message(msg) {
+          $('#Log').append(msg + '</br>');
+        }
+      }
+
+      connect();
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="Log"></div>
+  </div>
+</body>
+
+</html>

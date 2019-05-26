@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "11.15.0"
+  },
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/kingkill85/cb-alerts/issues"
   },
-  "homepage": "https://github.com/kingkill85/cb-alerts#readme"
+  "homepage": "https://github.com/kingkill85/cb-alerts#readme",
+  "dependencies": {
+    "bufferutil": "4.0.1",
+    "express": "4.17.1",
+    "puppeteer": "^1.17.0",
+    "utf-8-validate": "5.0.2",
+    "ws": "7.0.0"
+  }
 }
