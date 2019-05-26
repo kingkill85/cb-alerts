@@ -1,12 +1,13 @@
 const express = require('express');
 const ws = require('ws');
 const puppeteer = require('puppeteer');
+var path = require('path');
 
 const port = 8080;
 const app = express();
 const server = app.listen(port, () => console.log(`Listening on ${ port }`));
 
-app.use((req, res) => res.sendFile('/index.html'));
+app.use((req, res) => res.sendFile(path.join(__dirname, '/index.html')));
 
 
 const wss = new ws.Server({ server })
@@ -21,8 +22,9 @@ listenTips('magical_ramona');
 
 function listenTips(modelName) {
   (async () => {
+    var browser;
     try {
-      const browser = await puppeteer.launch({
+      browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
@@ -64,6 +66,9 @@ function listenTips(modelName) {
         );
       });
     } catch (e) {
+      if(browser){
+        browser.close()
+      }
       listenTips(modelName);
       console.log(e);
     }

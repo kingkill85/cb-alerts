@@ -6,7 +6,8 @@
   <script type="text/javascript">
     $(document).ready(function () {
       function connect() {
-        var socket = new WebSocket("ws://localhost:8000");
+        var host = location.origin.replace(/^http/, 'ws')
+        var socket = new WebSocket(host);
         socket.onmessage = function (msg) { message(msg.data); }
 
         function message(msg) {
