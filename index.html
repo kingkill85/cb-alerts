@@ -5,17 +5,28 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
-      function connect() {
+      var socket;
+
+      $('#connectBtn').click(function(){
+        var modelname = $('#modelInput').val();
+        $('#tokenlog').empty();
+        if(socket) {
+          socket.close();
+        }
+        connect(modelname);
+      });
+
+      function connect(modelname) {
         var host = location.origin.replace(/^http/, 'ws')
-        var socket = new WebSocket(host);
+        socket = new WebSocket(host, modelname);
         socket.onmessage = function (msg) { message(msg.data); }
 
         function message(msg) {
-          $('#Log').append(msg + '</br>');
+          $('#tokenlog').append(msg + '</br>');
         }
       }
 
-      connect();
+      //connect();
 
     });
   </script>
@@ -23,7 +34,9 @@
 
 <body>
   <div id="container">
-    <div id="Log"></div>
+    <input id="modelInput" type="text">
+    <button id="connectBtn" type="button">connect</button>
+    <div id="tokenlog"></div>
   </div>
 </body>
 

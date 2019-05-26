@@ -6,24 +6,36 @@ var path = require('path');
 const port = process.env.PORT || 8080
 const app = express();
 const server = app.listen(port, () => console.log(`Listening on ${ port }`));
+const connectionMap = new Map()
 
 app.use((req, res) => res.sendFile(path.join(__dirname, '/index.html'))) ;
 
 const wss = new ws.Server({ server })
 
 wss.on('connection', function (ws) {
+  var modelname = ws.protocol;
+  listenTips(modelname, ws);
+  ws.on('close' ,() => {
+    for (const [key, value] of connectionMap.entries()) {
+      if(key == ws) {
+        value.close();
+        
+        connectionMap.delete(ws);
+        break;
+      }
+    };
+  });
 });
 
-listenTips('magical_ramona');
 
-function listenTips(modelName) {
+function listenTips(modelName, ws) {
   (async () => {
-    var browser;
     try {
-      browser = await puppeteer.launch({
+      var browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
+      connectionMap.set(ws, browser);
       const [page] = await browser.pages();
 
       async function mutationListener(addedText) {
@@ -35,11 +47,7 @@ function listenTips(modelName) {
           if(tipStrArr && tipStrArr.length > 0){
             var logstring = `[${modelName}] ${tipStrArr[0]}: ${tipStrArr[2]}`;
             console.log(logstring);
-            if (wss) {
-              wss.clients.forEach((client) => {
-                client.send(logstring);
-              });
-            }
+            ws.send(logstring)
           }
         }
       }
@@ -62,10 +70,9 @@ function listenTips(modelName) {
         );
       });
     } catch (e) {
-      if(browser){
-        browser.close()
+      if(browser && browser.isConnected()){
+        ws.send(`Model ${modelName} not online. Try later again.`)
       }
-      listenTips(modelName);
       console.log(e);
     }
   })();
