@@ -5,18 +5,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
-      var socket;
+      let socket;
+      let shouldBeConnected = false;
+      var modelname;
 
       $('#connectBtn').click(function(){
-        var modelname = $('#modelInput').val();
+        modelname = $('#modelInput').val();
         $('#tokenlog').empty();
         if(socket) {
           socket.close();
+          shouldBeConnected = false;
         }
         connect(modelname);
       });
 
       function connect(modelname) {
+        shouldBeConnected = true;
         var host = location.origin.replace(/^http/, 'ws')
         socket = new WebSocket(host, modelname);
         socket.onmessage = function (msg) { message(msg.data); }
@@ -26,7 +30,11 @@
         }
       }
 
-      //connect();
+      setInterval(() => {
+        if (shouldBeConnected && socket.readyState === WebSocket.CLOSED) {
+          connect(modelname)
+        }
+      }, 10000)
 
     });
   </script>
