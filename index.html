@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+  <style>
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+
+  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
@@ -9,6 +12,13 @@
       let shouldBeConnected = false;
       var modelname;
 
+      $('#animation').hide();
+      if(window.location.hash) {
+        $('#connectBtn').hide();
+        $('#modelInput').hide();
+        modelname = window.location.hash.substr(1);
+        connect(modelname);
+      }
       $('#connectBtn').click(function(){
         modelname = $('#modelInput').val();
         $('#tokenlog').empty();
@@ -23,10 +33,13 @@
         shouldBeConnected = true;
         var host = location.origin.replace(/^http/, 'ws')
         socket = new WebSocket(host, modelname);
-        socket.onmessage = function (msg) { message(msg.data); }
-
-        function message(msg) {
-          $('#tokenlog').append(msg + '</br>');
+        socket.onmessage = (msg) => {
+          $('#tokenlog').html('<h2>'+msg.data.split(']')[1].replace(':', ' tipped') + ' tokens</h2>');
+          $("#animation").show(2000, ()=> {
+            $("#animation").hide(1000, ()=> {
+              $('#tokenlog').html('');
+            });
+          });
         }
       }
 
@@ -35,7 +48,7 @@
           $('#tokenlog').append('disconnected </br>');
           connect(modelname)
         }
-      }, 10000)
+      }, 2000)
 
     });
   </script>
@@ -45,6 +58,9 @@
   <div id="container">
     <input id="modelInput" type="text">
     <button id="connectBtn" type="button">connect</button>
+    <div id="animation">
+      <img src="http://bestanimations.com/Signs&Shapes/Hearts/manyhearts/pretty-tiny-heart-pattern-animated-gif.gif"></img>
+    </div>
     <div id="tokenlog"></div>
   </div>
 </body>

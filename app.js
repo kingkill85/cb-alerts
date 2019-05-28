@@ -55,6 +55,7 @@ function listenTips(modelName, ws) {
       page.exposeFunction('mutationListener', mutationListener);
       await page.goto('https://chaturbate.eu/' + modelName + '/');
       await page.waitForSelector('.chat-list');
+      await delay(2000);
       await page.evaluate(() => {
         const observerTarget = document.querySelector('div.chat-list');
         const mutationObserver = new MutationObserver((mutationsList) => {
@@ -76,4 +77,10 @@ function listenTips(modelName, ws) {
       console.log(e);
     }
   })();
+}
+
+function delay(time) {
+  return new Promise(function(resolve) { 
+      setTimeout(resolve, time)
+  });
 }
