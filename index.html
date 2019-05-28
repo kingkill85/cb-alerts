@@ -45,7 +45,7 @@
 
       setInterval(() => {
         if (shouldBeConnected && socket.readyState === WebSocket.CLOSED) {
-          $('#tokenlog').append('disconnected </br>');
+          //$('#tokenlog').append('disconnected </br>');
           connect(modelname)
         }
       }, 2000)
