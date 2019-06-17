@@ -8,7 +8,6 @@ const app = express();
 const server = app.listen(port, () => console.log(`Listening on ${ port }`));
 const connectionMap = new Map()
 
-
 app.use((req, res) => res.sendFile(path.join(__dirname, '/index.html'))) ;
 
 const wss = new ws.Server({ server })
