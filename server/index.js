@@ -1,13 +1,15 @@
-const app = require('express')();
-const server = require('http').createServer(app);
-
+const express = require('express');
+const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+const app = express();
+const server = http.createServer(app)
 
 app.use(bodyParser.json());
 app.use(cors());
 
-require('./services/cb-token-parser')(server);
+require('./services/cb-tips-socket')(server);
 
 
 app.get('/', function(req, res){
