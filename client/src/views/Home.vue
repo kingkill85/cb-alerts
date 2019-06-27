@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <counter name="Counter 1" />
+    
+    <p />
+
     <b-jumbotron bg-variant="dark" text-variant="white" border-variant="dark">
       <template slot="header"><b-img src="../assets/logo.png" alt="CB-Alerts"></b-img></template>
 
@@ -19,13 +23,12 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import counter from '@/components/Counter.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    counter
   }
 }
 </script>

@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!--div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div-->
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand href="#"><b-img src="./assets/logo.png" height="50" alt="CB-Alerts"></b-img></b-navbar-brand>
 
@@ -15,7 +11,6 @@
           <b-nav-item to="/about">About</b-nav-item>
         </b-navbar-nav>
 
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
@@ -24,6 +19,7 @@
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
+        
       </b-collapse>
     </b-navbar>
     <div class="container-fluid content">
