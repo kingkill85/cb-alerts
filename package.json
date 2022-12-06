@@ -22,7 +22,7 @@
   "homepage": "https://github.com/kingkill85/cb-alerts#readme",
   "dependencies": {
     "bufferutil": "4.0.1",
-    "express": "4.17.1",
+    "express": "4.18.2",
     "puppeteer": "^1.17.0",
     "require-path": "^0.3.0",
     "utf-8-validate": "5.0.2",
